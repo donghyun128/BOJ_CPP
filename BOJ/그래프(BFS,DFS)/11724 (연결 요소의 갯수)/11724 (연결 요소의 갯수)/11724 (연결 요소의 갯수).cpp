@@ -9,28 +9,19 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
-
-
-
 void DFS(vector<int> g[],int visited[] , int start)
 {
-    stack<int> s;
     visited[start] = TRUE;
-    s.push(start);
-    while (!s.empty())
-    {
-        int current = s.top();
-        s.pop();
+    
 
-        for (int i = 0; i < g[current].size(); i++)
+        for (int i = 0; i < g[start].size(); i++)
         {
-            int adj = g[current][i];
+            int adj = g[start][i];
                 if (visited[adj] == FALSE)
                 {
                     DFS(g, visited, adj);
                 }
         }
-    }
 }
 
 int main()
@@ -62,8 +53,6 @@ int main()
             count++;
         }
     }
-  
     printf("%d", count);
-
     return 0;
 }
