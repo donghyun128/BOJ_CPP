@@ -1,0 +1,4 @@
+﻿  5567.cpp
+C:\BOJ_CPP\BOJ\5567\5567\5567.cpp(14,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\BOJ_CPP\BOJ\5567\5567\5567.cpp(18,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  5567.vcxproj -> C:\BOJ_CPP\BOJ\5567\Debug\5567.exe
