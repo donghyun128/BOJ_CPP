@@ -5,39 +5,7 @@
 #include <algorithm>
 using namespace std;
 
-int dp[1002][1002] = {-100000};
-
-int succ_sum(int input,int arr[])
-{
-    int num = input;
-    for (int j = 0; j < input-1; j++)
-    {
-        dp[2][j] = arr[j] + arr[j + 1];
-    }
-
-    for (int i = 3; i < num-1; i++)
-    {
-        for (int j = 0; j < num - i;)
-        {
-            dp[i][j] = dp[i - 1][j] + arr[j + 2];
-        }
-    }
-    int max= -100000;
-    
-    for (int i = 2; i < num - 1; i++)
-    {
-        for (int j = 0; j < num - i; j++)
-        {
-            if (dp[i][j] > max)
-            {
-                max = dp[i][j];
-            }
-        }
-    }
-
-    return max;
-}
-
+int dp[100001] = {0};
 
 int main()
 {
@@ -49,11 +17,27 @@ int main()
     {
         cin >> arr[i];
     }
-     int result = succ_sum(input, arr);
-     cout << result << endl;
 
+    
+    dp[0] = arr[0];
+    
+    for (int i = 1; i < input; i++)
+    {
+        dp[i] = max(arr[i], dp[i - 1] + arr[i]);
+
+    }
+    int max_value = dp[0];
+    for (int i = 1; i < input; i++)
+    {
+        if (dp[i] > max_value)
+        {
+            max_value = dp[i];
+        }
+    }
+
+    printf("%d", max_value);
 
      return 0;
-
+     
 }
 
