@@ -3,23 +3,22 @@
 #include <iostream>
 #include <stack>
 #include <cstring>
-#include <stack>
 #define True 1
 #define False 0
 using namespace std;
 int visited[101][101] = { 0 };
-int g[101][101] = { 0 };
-int t[101][101] = { 0 };
+int g[101][101] = { 0 }; // 건물높이
+int t[101][101] = { 0 }; // 침수여부. 침수되면 0, 아니면 1
 
-void dfs(int y,int x) {
+void dfs(int y,int x, int r) {
     pair<int, int> d[4] = { {-1,0},{0,1},{1,0},{0,-1} };
 
             for (int k = 0; k < 4; k++)
             {
-                if (visited[y + d[k].first][x + d[k].second] == False && t[y + d[k].first][x + d[k].second] == True)
+                if (visited[y + d[k].first][x + d[k].second] == False && t[y + d[k].first][x + d[k].second] == True  && x+d[k].first < 101 && y+d[k].second < 101)
                 {
                     visited[y + d[k].first][x + d[k].second] = True;
-                    dfs(y + d[k].first, x + d[k].second);
+                    dfs(y + d[k].first, x + d[k].second,r);
                 }
             }
 }
@@ -43,8 +42,8 @@ int main()
     }
     
 
-     // 강수량 r의 범위는 1 ~ 가장 높은 건물 높이
-    for (int r = 1; r <= max; r++)
+     // 강수량 r의 범위는 0 ~ 가장 높은 건물 높이
+    for (int r = 0; r <= max; r++)
     {
         memset(t, 0, 101 * 101);
         memset(visited, 0, 101 * 101);
@@ -66,7 +65,7 @@ int main()
                 if (visited[i][j] == False && t[i][j] == True)
                 {
                   secure_zone[r]++;
-                  dfs(i, j);
+                  dfs(i, j,r);
                 }
                 
             }
@@ -75,7 +74,7 @@ int main()
     }
 
     int s_max = 0;
-    for (int r = 1; r <= max; r++) // 강수량에 따른 안전 구역 갯수 중 최대 갯수 출력
+    for (int r = 0; r <= max; r++) // 강수량에 따른 안전 구역 갯수 중 최대 갯수 출력
     {
         if (secure_zone[r] > s_max)
             s_max = secure_zone[r];
