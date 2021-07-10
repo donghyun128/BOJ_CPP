@@ -3,32 +3,27 @@
 
 #include <iostream>
 using namespace std;
-int zero = 0;
-int one = 0;
-int fibo_data[41];
+int zero_cnt[41];
+int one_cnt[41];
 
 void fibonacci(int n) {
-    if (n == 0) {
-        //printf("0");
-        zero++;
-        return;
+   
+    for (int i = 2; i <= n; i++)
+    {
+        zero_cnt[i] = zero_cnt[i - 2] + zero_cnt[i - 1];
+        one_cnt[i] = one_cnt[i - 2] + one_cnt[i - 1];
     }
-    else if (n == 1) {
-        //printf("1");
-        one++;
-        return;
-    }
-    else {
-        fibo_data[n] = fibo_data[n-1] + fibo_data[n-2];
-    }
+
 }
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
-    fibo_data[0] = 0;
-    fibo_data[1] = 1;
+    zero_cnt[0] = 1;
+    one_cnt[0] = 0;
+    zero_cnt[1] = 0;
+    one_cnt[1] = 1;
 
     int T, n;
 	cin >> T;
@@ -36,9 +31,7 @@ int main()
     {
         cin >> n;
         fibonacci(n);
-        printf("%d %d", zero, one);
+        printf("%d %d", zero_cnt[n], one_cnt[n]);
         printf("\n");
-        zero = 0;
-        one = 0;
     }
 }
