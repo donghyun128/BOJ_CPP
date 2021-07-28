@@ -34,18 +34,23 @@ void bfs(int start,vector<int> g[])
             }
         }
     }
-    
-
 }
 
-void initialyze()
+int isBirpartite(vector<int> g[], int n_vertex)
 {
-    memset(visited, 0, sizeof(visited));
-    while (!q.empty())
+    for (int i = 1; i <= n_vertex; i++)
     {
-        q.pop();
+        for (int j = 0; j < g[i].size(); j++)
+        {
+            if (group[i] == group[g[i][j]])
+            {
+                return 0;
+            }
+        }
     }
+    return 1;
 }
+
 
 int main()
 {
@@ -67,20 +72,19 @@ int main()
 
         for (int k = 1; k <= v; k++)
         {
-            bfs(k, g);
-            for (int l = 0; l < g[k].size(); l++)
-            {
-                if (group[k] == group[g[k][l]])
-                {
-                    result = 0;
-                    initialyze();
-                    break;
-                }
-            }
-            initialyze();
+            if (visited[k] == 0)
+                bfs(k, g);
         }
+
+        result = isBirpartite(g, v);
         if (result == 1) printf("YES\n");
         else if (result == 0) printf("NO\n");
+
+        memset(visited, 0, sizeof(visited));
+        memset(g, 0, sizeof(visited));
+        memset(group, 0, sizeof(visited));
+        while (!q.empty())
+            q.pop();
     }
 }
 
