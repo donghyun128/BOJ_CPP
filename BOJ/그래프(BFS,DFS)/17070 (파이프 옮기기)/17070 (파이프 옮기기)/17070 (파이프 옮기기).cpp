@@ -16,13 +16,13 @@ void dfs(int y, int x,int n)
 		return;
 	}
 	int nx, ny;
-	visited[y][x] = 1;
+	
 
 	if (map[y][x] == 2)
 	{
 		nx = x + dx[0];
 		ny = y + dy[0];
-		if (nx <= n && ny <= n && map[ny][nx] != 1 && visited[ny][nx] == 0)
+		if (nx <= n && ny <= n && map[ny][nx] != 1 ) 
 		{
 			map[ny][nx] = 2;
 			dfs(ny, nx, n);
@@ -30,7 +30,7 @@ void dfs(int y, int x,int n)
 
 		nx = x + dx[2];
 		ny = y + dy[2];
-		if (nx <= n && ny <= n && map[ny][nx] != 1 && visited[ny][nx] == 0)
+		if (nx <= n && ny <= n && map[ny][nx] != 1 && map[y+1][x] !=1 && map[y][x+1] != 1) 
 		{
 			map[ny][nx] = 4;
 			dfs(ny, nx, n);
@@ -41,7 +41,7 @@ void dfs(int y, int x,int n)
 	{
 		nx = x + dx[1];
 		ny = y + dy[1];
-		if (nx <= n && ny <= n && map[ny][nx] != 1 && visited[ny][nx] == 0)
+		if (nx <= n && ny <= n && map[ny][nx] != 1 ) 
 		{
 			map[ny][nx] = 3;
 			dfs(ny, nx, n);
@@ -49,7 +49,7 @@ void dfs(int y, int x,int n)
 
 		nx = x + dx[2];
 		ny = y + dy[2];
-		if (nx <= n && ny <= n && map[ny][nx] != 1 && visited[ny][nx] == 0)
+		if (nx <= n && ny <= n && map[ny][nx] != 1 && map[y + 1][x] != 1 && map[y][x + 1] != 1)
 		{
 			map[ny][nx] = 4;
 			dfs(ny, nx, n);
@@ -62,12 +62,23 @@ void dfs(int y, int x,int n)
 		{
 			nx = x + dx[i];
 			ny = y + dy[i];
-			if (nx <= n && ny <= n && map[ny][nx] != 1 && visited[ny][nx] == 0)
+			if (nx <= n && ny <= n && map[ny][nx] != 1) 
 			{
-				if (i == 0) map[ny][nx] = 2;
-				else if (i == 1) map[ny][nx] = 3;
-				else if (i == 2) map[ny][nx] = 4;
-				dfs(ny, nx, n);
+				if (i == 0)
+				{
+					map[ny][nx] = 2;
+					dfs(ny, nx, n);
+				}
+				else if (i == 1)
+				{
+					map[ny][nx] = 3;
+					dfs(ny, nx, n);
+				}
+				else if (i == 2 && map[y + 1][x] != 1 && map[y][x + 1] != 1)
+				{
+					map[ny][nx] = 4;
+					dfs(ny, nx, n);
+				}
 			}
 		}
 	}
