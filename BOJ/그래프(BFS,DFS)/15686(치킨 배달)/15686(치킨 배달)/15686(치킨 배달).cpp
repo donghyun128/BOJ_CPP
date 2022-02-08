@@ -73,13 +73,18 @@ void recur_chicken_distance(int idx,int cnt,int num_store)
 
 	}
 
-	else
-	{
-		visited[idx] = true;
-		recur_chicken_distance(idx + 1, cnt + 1,num_store);
+	if (idx == num_store)
+		return;
 
-		visited[idx] = false;
-		recur_chicken_distance(idx + 1, cnt,num_store);
+	else
+	{	
+			visited[idx] = true;
+			recur_chicken_distance(idx + 1, cnt + 1, num_store);
+
+			visited[idx] = false;
+			recur_chicken_distance(idx + 1, cnt, num_store);
+		
+	
 	}
 }
 
