@@ -1,60 +1,42 @@
 ﻿#include <iostream>
-
 using namespace std;
+
+int x[16];
 int n;
-bool map[15][15] = { false };
-int result = 0;
+int cnt = 0;
 
-bool isPossible(int y, int x)
+bool possible(int level)
 {
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < level; i++)
 	{
-		if (map[i][x] == true)
+		if ((x[i] == x[level]) || (abs(x[level] - x[i]) == level - i))
 			return false;
-	}
 
-	for (int j = 0; j < n; j++)
-	{
-		if (map[y][j] == true)
-			return false;
 	}
-
-	for (int k = 1; k < n; k++)
-	{
-		if (map[x + k][y + k] || map[x - k][y - k] || map[x + k][y - k] || map[x - k][y + k])
-			return false;
-	}
-
 	return true;
-
 }
-
-void dfs(int k)
+void func(int cur)
 {
-	if (n == k)
-	{
-		result++;
-		return;
+	if (cur == n) {
+		cnt++;
 	}
 
-	for (int i = 0; i < n; i++)
+	else
 	{
-
-
-			if (map[i][k] == false && isPossible(i, k))
+		for (int i = 0; i < n; i++)
+		{
+			x[cur] = i;
+			if (possible(cur))
 			{
-				map[i][k] = true;
-				dfs(k + 1);
-				map[i][k] = false;
+				func(cur + 1);
 			}
+		}
 	}
 
 }
-
-
 int main()
 {
 	cin >> n;
-	dfs(0);
-	cout << result;
+	func(0);
+	cout << cnt;
 }
