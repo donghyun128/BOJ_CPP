@@ -12,7 +12,7 @@ int dy[4] = { 1,-1,0,0 };
 int dx[4] = { 0,0,1,-1 };
 int ans = 0;
 
-void copyMap(int dst[][9],int src[][9])
+void copyMap(int (*dst)[9],int (*src)[9])
 {
 	for (int i = 1; i <= N; i++)
 	{
@@ -40,7 +40,7 @@ int safeZone_score(int map_infected[][9])
 	return result;
 }
 
-int virus_BFS()
+void virus_BFS()
 {
 	queue<pair<int, int>> q;
 	int map_tmp[9][9] = { 0 };
@@ -88,19 +88,18 @@ int virus_BFS()
 
 	}
 
-	return safeZone_score(map_tmp);
-
+	int result_tmp = safeZone_score(map_tmp);
+	ans = max(result_tmp, ans);
 
 
 }
 
-void setWall_recursive(int map_infected[][9],int cnt)
+void setWall_recursive(int cnt)
 {
 	if (cnt == 3)
 	{
-		bool virus_visited[9][9] = { false };
-		int tmp_result = virus_BFS();
-		ans = max(tmp_result, ans);
+		//bool virus_visited[9][9] = { false };
+		virus_BFS();
 		return;
 	}
 
@@ -114,7 +113,7 @@ void setWall_recursive(int map_infected[][9],int cnt)
 				{
 					map_infected[n][m] = 1;
 					
-					setWall_recursive(map_infected, cnt + 1);
+					setWall_recursive(cnt + 1);
 
 					map_infected[n][m] = 0;
 
@@ -148,7 +147,7 @@ int main()
 			{
 				copyMap(map_infected, map);
 				map[n][m] = 1;
-				setWall_recursive(map_infected, 1);
+				setWall_recursive(1);
 				map[n][m] = 0;
 			}
 
