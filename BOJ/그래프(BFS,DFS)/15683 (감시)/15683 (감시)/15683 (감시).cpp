@@ -49,7 +49,7 @@ void count_CCTV(int arr[][8])
 
 void up(int y, int x)
 {
-	for (int i = y; i >= 0; i--)
+	for (int i = y+1; i < N; i++)
 	{
 		if (office_tmp[i][x] == 6)
 			break;
@@ -65,7 +65,7 @@ void up(int y, int x)
 
 void down(int y, int x)
 {
-	for (int i = y; i < N; i++)
+	for (int i = y-1; i >= 0; i--)
 	{
 		if (office_tmp[i][x] == 6)
 			break;
@@ -81,7 +81,7 @@ void down(int y, int x)
 
 void right(int y, int x)
 {
-	for (int i = x; i < M; i++)
+	for (int i = x+1; i < M; i++)
 	{
 		if (office_tmp[y][i] == 6)
 			break;
@@ -96,7 +96,7 @@ void right(int y, int x)
 
 void left(int y, int x)
 {
-	for (int i = x; i >=0; i--)
+	for (int i = x-1; i >=0; i--)
 	{
 		if (office_tmp[y][i] == 6)
 			break;
@@ -174,8 +174,8 @@ void CCTV_three(int y, int x, int dir)
 
 	else if (dir == 2)
 	{
-		right(y, x);
 		up(y, x);
+		left(y, x);
 	}
 
 
@@ -186,8 +186,8 @@ void CCTV_three(int y, int x, int dir)
 	}
 	else
 	{
-		left(y, x);
-		up(y, x);
+		right(y, x);
+		down(y, x);
 	}
 }
 
@@ -203,7 +203,7 @@ void CCTV_four(int y, int x, int dir)
 
 	else if (dir == 2)
 	{
-		right(y, x);
+		left(y, x);
 		up(y, x);
 		down(y, x);
 	}
@@ -217,7 +217,7 @@ void CCTV_four(int y, int x, int dir)
 	}
 	else
 	{
-		left(y, x);
+		right(y, x);
 		up(y, x);
 		down(y, x);
 	}
@@ -286,6 +286,7 @@ void setCCTV_recursive(int cnt)
 						copyArr(office_tmp, office_recur);
 
 					}
+					
 					return;
 				}
 
@@ -301,6 +302,7 @@ void setCCTV_recursive(int cnt)
 						copyArr(office_tmp, office_recur);
 
 					}
+					
 					return;
 				}
 
@@ -329,7 +331,7 @@ void setCCTV_recursive(int cnt)
 					visited[i][j] = 0;
 
 					copyArr(office_tmp, office_recur);
-					break;
+					return;
 				}
 				default:
 					return;
@@ -363,6 +365,7 @@ int main()
 
 	cout << ans << endl;
 
+	/*
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < M; j++)
@@ -371,6 +374,7 @@ int main()
 		}
 		cout << endl;
 	}
+	*/
 
 }
 

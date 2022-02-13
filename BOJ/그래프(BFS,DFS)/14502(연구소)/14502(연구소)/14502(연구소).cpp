@@ -3,7 +3,7 @@
 
 using namespace std;
 int N, M;
-int map[9][9];
+int map[9][9] = {0};
 int map_infected[9][9] = { 0 };
 
 bool wall_visited[3] = { false };
