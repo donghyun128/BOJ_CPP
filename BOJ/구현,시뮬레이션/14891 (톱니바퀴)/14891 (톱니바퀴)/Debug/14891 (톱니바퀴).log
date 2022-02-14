@@ -1,0 +1,4 @@
+﻿  14891 (톱니바퀴).cpp
+C:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\14891 (톱니바퀴)\14891 (톱니바퀴)\14891 (톱니바퀴).cpp(108): warning C4172: 지역 변수 또는 임시: afterShift의 주소를 반환하고 있습니다.
+C:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\14891 (톱니바퀴)\14891 (톱니바퀴)\14891 (톱니바퀴).cpp(121): warning C4172: 지역 변수 또는 임시: afterShift의 주소를 반환하고 있습니다.
+  14891 (톱니바퀴).vcxproj -> C:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\14891 (톱니바퀴)\Debug\14891 (톱니바퀴).exe
