@@ -1,7 +1,7 @@
 ﻿
 #include <iostream>
 #include <string.h>
-#include <queue>
+#include <vector>
 using namespace std;
 
 #define CLOCKWISE 1
@@ -16,7 +16,7 @@ int gearMk4[8] = { 0 };
 
 int K;
 
-queue<pair<int, int>> sequence;
+vector<pair<int, int>> sequence;
 
 // N극 : 0, S극 : 1
 
@@ -57,7 +57,7 @@ void input()
 		int gear;
 		int rotate;
 		cin >> gear >> rotate;;
-		sequence.push(make_pair(gear, rotate));
+		sequence.push_back(make_pair(gear, rotate));
 	}
 }
 
@@ -88,15 +88,14 @@ void testPrint()
 
 	for (int k = 0; k < K; k++)
 	{
-		cout << sequence.front().first << " "<< sequence.front().second << endl;
-		sequence.pop();
+		cout << sequence[k].first << " "<< sequence[k].second << endl;
 		cout << endl;
 	}
 
 }
 
 // 시계방향
-int* arr_shiftRight(int beforeShift[])
+void arr_shiftRight(int* beforeShift)
 {
 	int afterShift[8] = { 0 };
 
@@ -105,12 +104,11 @@ int* arr_shiftRight(int beforeShift[])
 		afterShift[i] = beforeShift[i - 1];
 	}
 	afterShift[0] = beforeShift[7];
-
-	return afterShift;
+	memcpy(beforeShift, afterShift, sizeof(int) * 8);
 }
 
 // 시계반대방향
-int* arr_shiftLeft(int beforeShift[])
+void arr_shiftLeft(int* beforeShift)
 {
 	int afterShift[8] = { 0 };
 
@@ -119,7 +117,8 @@ int* arr_shiftLeft(int beforeShift[])
 		afterShift[i] = beforeShift[i + 1];
 	}
 	afterShift[7] = beforeShift[0];
-	return afterShift;
+	memcpy(beforeShift, afterShift, sizeof(int) * 8);
+
 }
 
 void rotateMk1(int dir, int from)
@@ -133,7 +132,7 @@ void rotateMk1(int dir, int from)
 			{
 				rotateMk2(COUNTER_CLOCKWISE, 1);
 			}
-			memcpy(gearMk1, arr_shiftRight(gearMk1), 8*sizeof(int));
+			arr_shiftRight(gearMk1);
 		}
 
 		// 반시계방향
@@ -143,8 +142,7 @@ void rotateMk1(int dir, int from)
 			{
 				rotateMk2(CLOCKWISE, 1);
 			}
-			memcpy(gearMk1, arr_shiftLeft(gearMk1), 8 * sizeof(int));
-
+			arr_shiftLeft(gearMk1);
 		}
 	}
 
@@ -155,14 +153,14 @@ void rotateMk1(int dir, int from)
 		{
 			if (gearMk2[6] != gearMk1[2])
 			{
-				memcpy(gearMk1, arr_shiftRight(gearMk1), 8 * sizeof(int));
+				arr_shiftRight(gearMk1);
 			}
 		}
 		else
 		{
 			if (gearMk2[6] != gearMk1[2])
 			{
-				memcpy(gearMk1, arr_shiftLeft(gearMk1), 8 * sizeof(int));
+				arr_shiftLeft(gearMk1);
 			}
 		}
 	}
@@ -179,7 +177,7 @@ void rotateMk2(int dir,int from)
 			if (gearMk1[2] != gearMk2[6])
 			{
 				rotateMk3(COUNTER_CLOCKWISE, 2);
-				memcpy(gearMk2, arr_shiftRight(gearMk2), 8 * sizeof(int));
+				arr_shiftRight(gearMk2);
 			}
 		}
 
@@ -189,7 +187,7 @@ void rotateMk2(int dir,int from)
 			if (gearMk1[2] != gearMk2[6])
 			{
 				rotateMk3(CLOCKWISE, 2);
-				memcpy(gearMk2, arr_shiftLeft(gearMk2), 8 * sizeof(int));
+				arr_shiftLeft(gearMk2);
 			}
 
 		}
@@ -209,9 +207,7 @@ void rotateMk2(int dir,int from)
 			{
 				rotateMk3(COUNTER_CLOCKWISE, 2);
 			}
-
-			memcpy(gearMk2, arr_shiftRight(gearMk2), 8 * sizeof(int));
-
+			arr_shiftRight(gearMk2);
 		}
 
 		// 반시계방향
@@ -226,8 +222,7 @@ void rotateMk2(int dir,int from)
 			{
 				rotateMk3(CLOCKWISE, 2);
 			}
-
-			memcpy(gearMk2, arr_shiftLeft(gearMk2), 8 * sizeof(int));
+			arr_shiftLeft(gearMk2);
 
 		}
 	}
@@ -240,7 +235,8 @@ void rotateMk2(int dir,int from)
 			if (gearMk2[2] != gearMk3[6])
 			{
 				rotateMk1(COUNTER_CLOCKWISE, 2);
-				memcpy(gearMk2, arr_shiftRight(gearMk2), 8 * sizeof(int));
+				arr_shiftRight(gearMk2);
+
 			}
 		}
 
@@ -250,7 +246,7 @@ void rotateMk2(int dir,int from)
 			if (gearMk2[2] != gearMk3[6])
 			{
 				rotateMk1(CLOCKWISE, 2);
-				memcpy(gearMk2, arr_shiftLeft(gearMk2), 8 * sizeof(int));
+				arr_shiftLeft(gearMk2);
 			}
 
 		}
@@ -268,7 +264,7 @@ void rotateMk3(int dir,int from)
 			if (gearMk2[2] != gearMk3[6])
 			{
 				rotateMk4(COUNTER_CLOCKWISE, 3);
-				memcpy(gearMk3, arr_shiftRight(gearMk3), 8 * sizeof(int));
+				arr_shiftRight(gearMk3);
 			}
 		}
 
@@ -278,7 +274,8 @@ void rotateMk3(int dir,int from)
 			if (gearMk2[2] != gearMk3[6])
 			{
 				rotateMk4(CLOCKWISE, 3);
-				memcpy(gearMk3, arr_shiftLeft(gearMk3), 8 * sizeof(int));
+				arr_shiftLeft(gearMk3);
+
 			}
 
 		}
@@ -299,7 +296,7 @@ void rotateMk3(int dir,int from)
 				rotateMk4(COUNTER_CLOCKWISE, 3);
 			}
 
-			memcpy(gearMk3, arr_shiftRight(gearMk3), 8 * sizeof(int));
+			arr_shiftRight(gearMk3);
 
 		}
 
@@ -316,7 +313,7 @@ void rotateMk3(int dir,int from)
 				rotateMk4(CLOCKWISE, 3);
 			}
 
-			memcpy(gearMk3, arr_shiftLeft(gearMk3), 8 * sizeof(int));
+			arr_shiftLeft(gearMk3);
 
 		}
 	}
@@ -329,7 +326,7 @@ void rotateMk3(int dir,int from)
 			if (gearMk3[2] != gearMk4[6])
 			{
 				rotateMk2(COUNTER_CLOCKWISE, 3);
-				memcpy(gearMk3, arr_shiftRight(gearMk3), 8 * sizeof(int));
+				arr_shiftRight(gearMk3);
 			}
 		}
 
@@ -339,7 +336,7 @@ void rotateMk3(int dir,int from)
 			if (gearMk3[2] != gearMk4[6])
 			{
 				rotateMk2(CLOCKWISE, 3);
-				memcpy(gearMk3, arr_shiftLeft(gearMk3), 8 * sizeof(int));
+				arr_shiftLeft(gearMk3);
 			}
 
 		}
@@ -356,7 +353,7 @@ void rotateMk4(int dir, int from)
 		{
 			if (gearMk3[2] != gearMk4[6])
 			{
-				memcpy(gearMk4, arr_shiftRight(gearMk4), 8 * sizeof(int));
+				arr_shiftRight(gearMk4);
 			}
 		}
 
@@ -365,7 +362,7 @@ void rotateMk4(int dir, int from)
 		{
 			if (gearMk3[2] != gearMk4[6])
 			{
-				memcpy(gearMk4, arr_shiftLeft(gearMk4), 8 * sizeof(int));
+				arr_shiftLeft(gearMk4);
 			}
 
 		}
@@ -379,7 +376,7 @@ void rotateMk4(int dir, int from)
 			{
 				rotateMk3(COUNTER_CLOCKWISE, 4);
 			}
-			memcpy(gearMk4, arr_shiftRight(gearMk4), 8 * sizeof(int));
+			arr_shiftRight(gearMk4);
 
 
 		}
@@ -390,7 +387,7 @@ void rotateMk4(int dir, int from)
 			{
 				rotateMk3(CLOCKWISE, 4);
 			}
-			memcpy(gearMk4, arr_shiftLeft(gearMk4), 8 * sizeof(int));
+			arr_shiftLeft(gearMk4);
 
 		}
 	}
@@ -442,11 +439,10 @@ int countScore()
 void solution()
 {
 
-	while (!sequence.empty())
+	for (int v=0; v < sequence.size(); v++)
 	{
-		int gear_num = sequence.front().first;
-		int dir = sequence.front().second;
-		sequence.pop();
+		int gear_num = sequence[v].first;
+		int dir = sequence[v].second;
 
 		rotateStart(gear_num, dir);
 	}
