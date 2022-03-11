@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "17144 (미세먼지 안녕)", "17144 (미세먼지 안녕)\17144 (미세먼지 안녕).vcxproj", "{337AD5D3-4F0E-49AB-8FE4-21F503099F63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Debug|x64.ActiveCfg = Debug|x64
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Debug|x64.Build.0 = Debug|x64
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Debug|x86.ActiveCfg = Debug|Win32
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Debug|x86.Build.0 = Debug|Win32
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Release|x64.ActiveCfg = Release|x64
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Release|x64.Build.0 = Release|x64
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Release|x86.ActiveCfg = Release|Win32
+		{337AD5D3-4F0E-49AB-8FE4-21F503099F63}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23D3967D-0786-4521-98B3-53B7D188B310}
+	EndGlobalSection
+EndGlobal
