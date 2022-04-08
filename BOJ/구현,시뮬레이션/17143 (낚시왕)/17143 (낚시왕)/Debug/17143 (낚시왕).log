@@ -1,2 +1,4 @@
 ﻿  17143 (낚시왕).cpp
+D:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\17143 (낚시왕)\17143 (낚시왕)\17143 (낚시왕).cpp(36,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+D:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\17143 (낚시왕)\17143 (낚시왕)\17143 (낚시왕).cpp(167,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   17143 (낚시왕).vcxproj -> D:\Development\BOJ_CPP\BOJ\구현,시뮬레이션\17143 (낚시왕)\Debug\17143 (낚시왕).exe

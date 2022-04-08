@@ -1,17 +1,76 @@
 ﻿
 #include <iostream>
 #include <tuple>
+#include <queue>
 #define UP 1
 #define DOWN 2
 #define RIGHT 3 
 #define LEFT 4
 using namespace std;
 
-int map[101][101][4] = { 0 }; // 0 : 크기 , 1 : 속도 , 2: 방향 , 3: 이동 여부
+typedef struct shark
+{
+	int y;
+	int x;
+	int size;
+	int speed;
+	int dir;
+	int num;
+} shark;
+
+vector<shark> map[101][101]; // 0 : 크기 , 1 : 속도 , 2: 방향 , 3: 이동 여부
+vector<shark> map_tmp[101][101];
 int fisher_x = 0;
 int catched_shark = 0;
 int R, C, M;
+vector<shark> shark_v;
 
+void copyMap()
+{
+	for (int r = 1; r <= R; r++)
+	{
+		for (int c = 1; c <= C; c++)
+		{
+			if (!map_tmp[r][c].empty())
+			{
+				for (int s = 0; s < map_tmp[r][c].size(); s++)
+				{
+					struct shark shark_tmp = map_tmp[r][c][s];
+					map[shark_tmp.y][shark_tmp.x].push_back(shark_tmp);
+				}
+
+			}
+		}
+	}
+}
+
+void clearMap()
+{
+	for (int r = 1; r <= R; r++)
+	{
+		for (int c = 1; c <= C; c++)
+		{
+			if (!map[r][c].empty())
+			{
+				map[r][c].clear();
+			}
+		}
+	}
+}
+
+void clearMapTmp()
+{
+	for (int r = 1; r <= R; r++)
+	{
+		for (int c = 1; c <= C; c++)
+		{
+			if (!map_tmp[r][c].empty())
+			{
+				map_tmp[r][c].clear();
+			}
+		}
+	}
+}
 
 
 void catchOneShark()
@@ -19,28 +78,24 @@ void catchOneShark()
 	fisher_x++;
 	for (int i = 1; i <= R; i++)
 	{
-		if (map[i][fisher_x][0] !=0)
+		if (!map[i][fisher_x].empty())
 		{
-			catched_shark += map[i][fisher_x][0];
-			map[i][fisher_x][0] = 0;
-			map[i][fisher_x][1] = 0;
-			map[i][fisher_x][2] = 0;
+			catched_shark += map[i][fisher_x][0].size;
+			map[i][fisher_x].pop_back();
 			break;
 		}
 	}
 }
 
-tuple<int, int,int> moveAlgorihtm(int y, int x, int speed, int direction)
+void moveAlgorihtm(int y,int x)
 {
-	if (speed == 0)
-	{
-		return make_tuple(y, x, direction);
-	}
-	int goal_y = y, goal_x = x;
+	struct shark cur_shark = map[y][x][0];
+	struct shark tmp_shark;
 
-	int distance = speed;
-	int cur_dir = direction;
-
+	int goal_y = cur_shark.y, goal_x = cur_shark.x;
+	int distance = cur_shark.speed;
+	int cur_dir = cur_shark.dir;
+	
 	while (distance != 0)
 	{
 		distance--;
@@ -68,7 +123,7 @@ tuple<int, int,int> moveAlgorihtm(int y, int x, int speed, int direction)
 				goal_y++;
 			break;
 		}
-		case RIGHT:
+ 		case RIGHT:
 		{
 			if (goal_x + 1 > C)
 			{
@@ -92,7 +147,41 @@ tuple<int, int,int> moveAlgorihtm(int y, int x, int speed, int direction)
 		}
 		}
 	}
-	return make_tuple(goal_y, goal_x, cur_dir);
+
+	tmp_shark.y = goal_y;
+	tmp_shark.x = goal_x;
+	tmp_shark.size = cur_shark.size;
+	tmp_shark.dir = cur_dir;
+	tmp_shark.speed  = cur_shark.speed;
+
+	//map[y][x].pop_back();
+	map_tmp[goal_y][goal_x].push_back(tmp_shark);
+
+}
+
+void eatShark(int y, int x)
+{
+	struct shark tmp_shark;
+	int max = 0;
+	int max_idx = -1;
+	for (int s = 0; s < map_tmp[y][x].size(); s++)
+	{
+		if (map_tmp[y][x][s].size > max)
+		{
+			max_idx = s;
+			max = map_tmp[y][x][s].size;
+		}
+	}
+
+	tmp_shark.y = map_tmp[y][x][max_idx].y;
+	tmp_shark.x = map_tmp[y][x][max_idx].x;
+	tmp_shark.size = map_tmp[y][x][max_idx].size;
+	tmp_shark.dir = map_tmp[y][x][max_idx].dir;
+	tmp_shark.speed = map_tmp[y][x][max_idx].speed;
+	tmp_shark.num = map_tmp[y][x][max_idx].num;
+
+	map_tmp[y][x].clear();
+	map_tmp[y][x].push_back(tmp_shark);
 }
 
 void sharkMove()
@@ -101,31 +190,19 @@ void sharkMove()
 	{
 		for (int c = 1; c <= C; c++)
 		{
-			if (map[r][c][0] != 0 && map[r][c][3] == 0)
+			if (!map[r][c].empty())
 			{
-				tuple<int, int,int> goal_pair = moveAlgorihtm(r, c, map[r][c][1], map[r][c][2]);
-				
-				// 상어가 겹쳤을 때 잡아먹기
-					if (map[r][c][0] >= map[get<0>(goal_pair)][get<1>(goal_pair)][0])
-					{
-						map[get<0>(goal_pair)][get<1>(goal_pair)][0] = map[r][c][0];
-						map[get<0>(goal_pair)][get<1>(goal_pair)][1] = map[r][c][1];
-						map[get<0>(goal_pair)][get<1>(goal_pair)][2] = get<2>(goal_pair);
-						map[get<0>(goal_pair)][get<1>(goal_pair)][3] = 1;
-					}
-				
-
-				// 이동 후, 있었던 장소를 비움
-					if (r == get<0>(goal_pair) && c == get<1>(goal_pair))
-						continue;
-
-					map[r][c][0] = 0;
-					map[r][c][1] = 0;
-					map[r][c][2] = 0;
-					map[r][c][3] = 0;
-					
-				
+				moveAlgorihtm(r, c);
 			}
+		}
+	}
+
+	for (int r = 1; r <= R; r++)
+	{
+		for (int c = 1; c <= C; c++)
+		{
+			if (map_tmp[r][c].size() >= 2)
+				eatShark(r,c);
 		}
 	}
 }
@@ -134,13 +211,9 @@ void secondProcess()
 {
 	catchOneShark();
 	sharkMove();
-
-	for (int r = 1; r <= R; r++)
-	{
-		for (int c = 1; c <= C; c++)
-			map[r][c][3] = 0;
-	}
-
+	clearMap();
+	copyMap();
+	clearMapTmp();
 }
 
 void fishing()
@@ -157,12 +230,21 @@ void input()
 {
 	int shark_r, shark_c, tmp_size, tmp_speed, tmp_dir;
 	cin >> R >> C >> M;
+
 	for (int m = 0; m < M; m++)
 	{
 		cin >> shark_r >> shark_c >> tmp_speed >> tmp_dir >> tmp_size;
-		map[shark_r][shark_c][0] = tmp_size;
-		map[shark_r][shark_c][1] = tmp_speed;
-		map[shark_r][shark_c][2] = tmp_dir;
+		struct shark tmp_shark;
+
+		tmp_shark.y = shark_r;
+		tmp_shark.x = shark_c;
+		tmp_shark.speed = tmp_speed;
+		tmp_shark.dir = tmp_dir;
+		tmp_shark.size = tmp_size;
+		tmp_shark.num = m;
+
+		shark_v.push_back(tmp_shark);
+		map[shark_r][shark_c].push_back(tmp_shark);
 	}
 }
 
