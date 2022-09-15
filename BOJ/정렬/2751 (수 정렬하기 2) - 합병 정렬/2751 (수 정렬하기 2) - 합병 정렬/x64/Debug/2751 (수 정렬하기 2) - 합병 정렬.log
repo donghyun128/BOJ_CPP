@@ -1,0 +1,4 @@
+﻿  2751 (수 정렬하기 2) - 합병 정렬.cpp
+C:\BOJ_CPP\BOJ\정렬\2751 (수 정렬하기 2) - 합병 정렬\2751 (수 정렬하기 2) - 합병 정렬\2751 (수 정렬하기 2) - 합병 정렬.cpp(59,2): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\BOJ_CPP\BOJ\정렬\2751 (수 정렬하기 2) - 합병 정렬\2751 (수 정렬하기 2) - 합병 정렬\2751 (수 정렬하기 2) - 합병 정렬.cpp(61,3): warning C4996: 'scanf': This function or variable may be unsafe. Consider using scanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  2751 (수 정렬하기 2) - 합병 정렬.vcxproj -> C:\BOJ_CPP\BOJ\정렬\2751 (수 정렬하기 2) - 합병 정렬\x64\Debug\2751 (수 정렬하기 2) - 합병 정렬.exe
